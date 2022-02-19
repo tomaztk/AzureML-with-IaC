@@ -4,7 +4,7 @@
 param storageName string = 'MyMLStorage'
 param locationResource string = 'westeurope'
 param resourceGroupName string = 'MyResourceGroup'
-// param WorkspaceName string = 'MLAzureWorksSpace'
+param WorkspaceName string = 'MLAzureWorksSpace'
 
 // Setting target scope
 targetScope = 'subscription'
@@ -26,13 +26,14 @@ module storageRes './storage.bicep' = {
 }
 
 // Deploying Workspace using this module
-//module MLwsRes'./MLworkspace.bicep' = {
-//  name: WorkspaceName
-//  scope: newRG  
-//  params:{
-//    WorkspaceName: WorkspaceName
-//  }
-// }
+module MLwsRes'./MLworkspace.bicep' = {
+  name: WorkspaceName
+  scope: newRG  
+  params:{
+    WorkspaceName: WorkspaceName
+    location: locationResource
+  }
+ }
 
 
 

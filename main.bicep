@@ -20,7 +20,7 @@ module storageRes './storage.bicep' = {
   name: storageName
   scope: newRG    // Deployed in the scope of resource group we created above
   params: {
-    storageAccountName: 'dbpystorage'
+    storageAccountName: 'dbpystorage2'
     location: locationResource
   }
 }

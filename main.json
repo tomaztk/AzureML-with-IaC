@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1272.37030",
-      "templateHash": "9366910671664349637"
+      "templateHash": "12924740971205720081"
     }
   },
   "parameters": {
@@ -20,6 +20,10 @@
     "resourceGroupName": {
       "type": "string",
       "defaultValue": "MyResourceGroup"
+    },
+    "WorkspaceName": {
+      "type": "string",
+      "defaultValue": "MLAzureWorksSpace"
     }
   },
   "resources": [
@@ -41,7 +45,7 @@
         "mode": "Incremental",
         "parameters": {
           "storageAccountName": {
-            "value": "dbpystorage"
+            "value": "dbpystorage2"
           },
           "location": {
             "value": "[parameters('locationResource')]"
@@ -90,6 +94,57 @@
                 "name": "[parameters('storageSKU')]"
               },
               "kind": "StorageV2"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[parameters('WorkspaceName')]",
+      "resourceGroup": "[parameters('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "WorkspaceName": {
+            "value": "[parameters('WorkspaceName')]"
+          },
+          "location": {
+            "value": "[parameters('locationResource')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.1272.37030",
+              "templateHash": "2120638080494253227"
+            }
+          },
+          "parameters": {
+            "WorkspaceName": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.MachineLearning/workspaces",
+              "apiVersion": "2019-10-01",
+              "name": "[parameters('WorkspaceName')]",
+              "location": "[parameters('location')]"
             }
           ]
         }

@@ -1,2 +1,3 @@
-# AzureML-with-IaC
-Azure Machine Learning with Infrastructure as Code
+# Azure Machine Learning with IaC
+
+Exploring Azure Machine Learning with Infrastructure as Code and CI/CD

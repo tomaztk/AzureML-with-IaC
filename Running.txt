@@ -6,7 +6,18 @@ az bicep upgrade
 
 // run in Azure CLI (in VS Code)
 az login
+az bicep build --file main.bicep
 
-az group create --name exampleRG --location eastus
-az deployment group create --resource-group exampleRG --template-file main.bicep  --parameters storageName=storesamplerg
+
+az deployment --template-file main.bicep
+az deployment --file main.bicep
+
+
+//az group create --name MyResourceGroup 
+az deployment group create --resource-group exampleRG --template-file main.bicep
 az group delete --name exampleRG
+
+
+
+az group create --name MyResourceGroup --location westeurope
+az deployment group create --resource-group MyResourceGroup --template-file main.bicep --parameters storageName=MyMLStorage

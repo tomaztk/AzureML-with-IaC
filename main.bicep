@@ -9,6 +9,7 @@ param MLComputeName string = 'MLAzureWorksSpaceCompute'
 
 // Setting target scope
 targetScope = 'subscription'
+//targetScope = 'resourceGroup' 
 
 // Creating resource group
 resource newRG 'Microsoft.Resources/resourceGroups@2021-01-01' = {

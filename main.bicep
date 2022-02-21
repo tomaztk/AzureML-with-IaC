@@ -5,6 +5,7 @@ param storageName string = 'MyMLStorage'
 param locationResource string = 'westeurope'
 param resourceGroupName string = 'MyResourceGroup'
 param WorkspaceName string = 'MLAzureWorksSpace'
+param MLComputeName string = 'MLAzureWorksSpaceCompute'
 
 // Setting target scope
 targetScope = 'subscription'
@@ -34,6 +35,17 @@ module MLwsRes'./MLworkspace.bicep' = {
     location: locationResource
   }
  }
+
+ module MLCompute'./MLworkspaceCompute.bicep' = {
+  name: MLComputeName
+  scope: newRG  
+  params:{
+    MLComputeName: MLComputeName
+    location: locationResource
+  }
+ }
+
+
 
 
 

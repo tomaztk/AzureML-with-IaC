@@ -5,11 +5,6 @@ az group delete --name mojRG
 
 az deployment group create --resource-group mojRG --template-file ./main2.bicep
 
-az deployment group create --resource-group mojRG --template-file ./main2.bicep --parameters yourName=Tomaz --query properties.outputs.helloWorld.value
-
-
-
-
 
 # adding SQL resources
 
@@ -17,40 +12,3 @@ az deployment group create --resource-group mojRG --template-file ./main2.bicep 
 az group create --name mojRG --location westeurope
 
 az deployment group create --resource-group mojRG --template-file ./main2.bicep
-
-
-adminLogin: tomaz
-adminLoginPass: Tomaz123
-
-
-## storage, SQL Server
-
-az group create --name mojRG2 --location westeurope
-az deployment group create --resource-group mojRG2 --template-file ./main2.bicep
-az group delete --name mojRG2
-
-
-administratorLogin: tomazkastrun
-sqlAdministratorLoginPassword: SamsungNaMizi.2022
-storageAccountName: tomazsqlbiceptest1
-
-
-
-## storage, ML service
-main3.bicep
-
-az group create --name mojRG3 --location westeurope
-az deployment group create --resource-group mojRG3 --template-file ./main3.bicep
-
-az group delete --name mojRG3
-
-storageAccountName: tomazmlservicebicep
-WorkspaceName: tomazmlwsbicep
-
-'/subscriptions/{subscriptionId}' or '/providers/{resourceProviderNamespace}
-
-
-
-#convert JSON to bicep
-
-az bicep decompile --file templateMLWS.json

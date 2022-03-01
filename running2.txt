@@ -1,14 +1,5 @@
-##deployment for main2.bicep
 
-az group create --name mojRG --location centralus
-az group delete --name mojRG
-
-az deployment group create --resource-group mojRG --template-file ./main2.bicep
-
-
-# adding SQL resources
-
-// az group create --name mojRG --location centralus
-az group create --name mojRG --location westeurope
-
-az deployment group create --resource-group mojRG --template-file ./main2.bicep
+az login
+az group create --name TomazKWML --location westeurope
+az deployment group create --resource-group TomazKWML --template-file ./templateMLWS.bicep
+az group delete --name TomazKWML

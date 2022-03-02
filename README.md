@@ -72,11 +72,15 @@ With all three files set, run the command to deploy the resouces:
 az deployment group create --resource-group TomazKWML --template-file ./templateMLWS.bicep
 ```
 
+## Visualisation of Bicep dependencies
+ 
+<img src="imgs/Visual_bicep.png" align="center" width="300" />
+
  ## Cloning the repository
  You can follow the steps below to clone the repository.
 
  ```
-sudo git clone 
+sudo git clone https://github.com/tomaztk/AzureML-with-IaC.git
  ```
 
  ## Contact

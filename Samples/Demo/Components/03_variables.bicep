@@ -73,3 +73,44 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-04-01' = {
 
 
 output storageEndpoint object = stg.properties.primaryEndpoints
+
+
+
+/*
+// similar
+
+param environment string
+param tags object
+
+var location = resourceGroup().location
+var environmentSettings = {
+  prod: {
+    storageAccountName: toLower('strprod${uniqueString(resourceGroup().id)}') 
+    sku: 'Standard_GRS'
+    publicAccess: false
+  }
+  test: {
+    storageAccountName: toLower('strtest${uniqueString(resourceGroup().id)}') 
+    sku: 'Standard_LRS'
+    publicAccess: true
+  }
+}
+
+resource storage 'Microsoft.Storage/storageAccounts@2019-04-01' = {
+  name: '${environmentSettings[environment].storageAccountName}' 
+  location: location
+  sku: {
+    name: '${environmentSettings[environment].sku}'
+  }
+  kind: 'StorageV2'
+  tags: tags
+  properties: {
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: '${environmentSettings[environment].publicAccess}'
+  } 
+}
+
+output storageAccountName string = storage.name
+
+
+*/

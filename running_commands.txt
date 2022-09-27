@@ -1,5 +1,5 @@
 
 az login
 az group create --name TomazKWML --location westeurope
-az deployment group create --resource-group TomazKWML --template-file ./templateMLWS.bicep
+az deployment group create --resource-group TomazKWML --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/templateMLWS.bicep
 az group delete --name TomazKWML

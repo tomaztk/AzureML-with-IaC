@@ -1,0 +1,5 @@
+
+az login
+az group create --name RG_tomazKWML --location westeurope
+az deployment group create --resource-group RG_tomazKWML --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/Samples/SQL_Database/main.bicep
+az group delete --name RG_TomazKWML

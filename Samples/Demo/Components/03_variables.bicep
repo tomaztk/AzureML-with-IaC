@@ -41,7 +41,7 @@ var instanceSKU  = envsetting[env].StorageSKU
 
 @minLength(3)
 @maxLength(11)
-param storagePrefix string
+param storagePrefix string = 'st27'
 param location string = resourceGroup().location // Lokacija vezana na resourse skupino! lahko pa jo zamenjam
 
 

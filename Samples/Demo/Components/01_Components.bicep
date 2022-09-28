@@ -53,22 +53,22 @@ param location string
 param storageSKU string // = 'Standard_LRS'
 
 // Run 3: use the allowed for locations
-
+// name: st24
 
 /////////////////
 // Variables
 /////////////////
 
 // Run 4: adding en kup stvari v variablooo in dodamo še datum
-//var uniqueStorageName = '${storagePrefix}${uniqueString(resourceGroup().id)}'
+var uniqueStorageName = '${storagePrefix}${uniqueString(resourceGroup().id)}'
 
-param baseTime string = utcNow('u')
-var add2hours = dateTimeAdd(baseTime, 'PT2H') // UTC+2 = CEST
+//param baseTime string = utcNow('u')
+//var add2hours = dateTimeAdd(baseTime, 'PT2H') // UTC+2 = CEST
 //var uniqueStorageName = '${storagePrefix}${add2hours}${'PROD'}' // posebni znaki
 
-// >> st25
-param convertedEpoch int = dateTimeToEpoch(dateTimeAdd(utcNow(), 'P1Y'))
-var uniqueStorageName = '${storagePrefix}${convertedEpoch}${'prod'}'
+// name: st25
+//param convertedEpoch int = dateTimeToEpoch(dateTimeAdd(utcNow(), 'P1Y'))
+//var uniqueStorageName = '${storagePrefix}${convertedEpoch}${'prod'}'
 
 
 
@@ -91,3 +91,5 @@ resource stg 'Microsoft.Storage/storageAccounts@2019-04-01' = {
 
 
 output storageEndpoint object = stg.properties.primaryEndpoints
+
+// >> pojdi v 02_variables!

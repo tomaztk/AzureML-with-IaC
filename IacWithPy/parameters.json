@@ -1,0 +1,64 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westeurope"
+        },
+        "workspaceName": {
+            "value": "AML_WS_"
+        },
+        "resourceGroupName": {
+            "value": "RG_AML_Bicep"
+        },
+        "sku": {
+            "value": "Basic"
+        },
+        "tagValues": {
+            "value": {
+                "author": "Tomaz Kastrun",
+                "application": "Azure ML Service for Bicep",
+                "DateCreated": "20-OCT-2022"
+            }
+        },
+        "keyVaultName": {
+            "value": "amlws6480011254"
+        },
+        "storageAccountName": {
+            "value": "amlws8307249762"
+        },
+        "applicationInsightsName": {
+            "value": "amlws1086624674"
+        },
+        "softDeleteEnabled": {
+            "value": "true"
+        },
+        "storageAccountOption": {
+            "value": "new"
+        },
+        "storageAccountHnsEnabled": {
+            "value": false
+        },
+        "keyVaultOption": {
+            "value": "new"
+        },
+        "applicationInsightsOption": {
+            "value": "new"
+        },
+        "containerRegistryOption": {
+            "value": "new"
+        },
+        "containerRegistryName": {
+            "value": "AMLWSCon"
+        },
+        "containerRegistrySku": {
+            "value": "Basic"
+        },
+        "identityType": {
+            "value": "systemAssigned"
+        },
+        "publicNetworkAccess": {
+            "value": "Enabled"
+        }
+    }
+}

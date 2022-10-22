@@ -1,0 +1,16 @@
+Decompile (convert) from ARM to Bicep using command: 
+
+az Bicep Decompile --file template.json
+
+
+Steps:
+
+1. open files in VS Code
+2. make sure that you have the bicep extension installed
+3. open CLI terminal
+4. update bicep to latest version (run: "az bicep upgrade")
+5. run the upper bicep command
+
+
+You have now the bicep files. The main bicep file in this case is named: template.bicep.
+

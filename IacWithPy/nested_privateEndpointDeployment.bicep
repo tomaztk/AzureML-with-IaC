@@ -1,5 +1,5 @@
-param variables_defaultPEConnections ? /* TODO: fill in correct type */
-param variables_subnet ? /* TODO: fill in correct type */
+param variables_defaultPEConnections array /* TODO: fill in correct type */
+param variables_subnet string /* TODO: fill in correct type */
 
 @description('Name of the private end point added to the workspace')
 param privateEndpointName string

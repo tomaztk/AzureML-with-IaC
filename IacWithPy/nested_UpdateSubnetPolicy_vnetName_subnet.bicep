@@ -1,5 +1,5 @@
 param reference_variables_subnet_2019_09_01 object
-param variables_subnetPolicyForPE ? /* TODO: fill in correct type */
+param variables_subnetPolicyForPE object 
 
 @description('Name of the VNet')
 param vnetName string

@@ -1,3 +1,4 @@
+
 @description('Specifies the name of the Azure Machine Learning workspace.')
 param workspaceName string = 'AML_WS'
 
@@ -5,7 +6,7 @@ param workspaceName string = 'AML_WS'
 param location string = 'westeurope'
 
 @description('Specifies the resource group name of the Azure Machine Learning workspace.')
-param resourceGroupName string = 'RG_AML_Bicep'
+param resourceGroupName string = 'RG_AML_Bicep2'
 
 @description('Specifies the sku, also referred as \'edition\' of the Azure Machine Learning workspace.')
 @allowed([
@@ -231,20 +232,7 @@ var networkRuleSetBehindVNet = {
     }
   ]
 }
-var subnetPolicyForPE = {
-  privateEndpointNetworkPolicies: 'Disabled'
-  privateLinkServiceNetworkPolicies: 'Enabled'
-}
-var privateEndpointSettings = {
-  name: '${workspaceName}-PrivateEndpoint'
-  properties: {
-    privateLinkServiceId: workspace.id
-    groupIds: [
-      'amlworkspace'
-    ]
-  }
-}
-var defaultPEConnections = array(privateEndpointSettings)
+
 var privateEndpointDeploymentName = 'DeployPrivateEndpoint-${uniqueString(privateEndpointName)}'
 var userAssignedIdentities = {
   '${primaryUserAssignedIdentity}': {
@@ -254,18 +242,20 @@ var primaryUserAssignedIdentity = resourceId(primaryUserAssignedIdentityResource
 var appInsightsLogWorkspaceDeploymentName = 'DeployLogWorkspace-${uniqueString(applicationInsightsName)}'
 var softDeleteEnabled_var = softDeleteEnabled
 
-module UpdateSubnetPolicy_vnetName_subnet './nested_UpdateSubnetPolicy_vnetName_subnet.bicep' = if ((subnetOption == 'existing') && (privateEndpointType != 'none')) {
-  name: 'UpdateSubnetPolicy-${uniqueString(vnetName, subnetName)}'
-  scope: resourceGroup(privateEndpointSubscription, vnetResourceGroupName)
-  params: {
-    reference_variables_subnet_2019_09_01: reference(subnet, '2019-09-01')
-    variables_subnetPolicyForPE: subnetPolicyForPE
-    vnetName: vnetName
-    subnetName: subnetName
-    subnetOption: subnetOption
-    privateEndpointType: privateEndpointType
-  }
+
+
+
+param reference_variables_subnet_2019_09_01 object
+param variables_subnetPolicyForPE object 
+
+
+
+
+resource vnetName_subnet 'Microsoft.Network/virtualNetworks/subnets@2019-09-01' = {
+  name: '${vnetName}/${subnetName}'
+  properties: (((subnetOption == 'existing') && (privateEndpointType != 'none')) ? union(reference_variables_subnet_2019_09_01, variables_subnetPolicyForPE) : json('null'))
 }
+
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-04-01' = if (enablePE && (storageAccountOption == 'new')) {
   name: storageAccountName
@@ -307,73 +297,3 @@ resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = if (enablePE && (keyV
     networkAcls: ((keyVaultBehindVNet == 'true') ? networkRuleSetBehindVNet : json('null'))
   }
 }
-
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2019-05-01' = if (enablePE && (containerRegistryOption == 'new')) {
-  tags: tagValues
-  name: containerRegistryName
-  location: containerRegistryLocation
-  sku: {
-    name: containerRegistrySku
-  }
-  properties: {
-    adminUserEnabled: true
-    networkRuleSet: ((containerRegistryBehindVNet == 'true') ? networkRuleSetBehindVNet : json('null'))
-  }
-}
-
-resource applicationInsights 'Microsoft.Insights/components@2018-05-01-preview' = if (enablePE && (applicationInsightsOption == 'new')) {
-  tags: tagValues
-  name: applicationInsightsName
-  location: (((applicationInsightsLocation == 'westcentralus') || (applicationInsightsLocation == 'eastus2euap') || (applicationInsightsLocation == 'centraluseuap') || (applicationInsightsLocation == 'westus3')) ? 'southcentralus' : applicationInsightsLocation)
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-  }
-}
-
-resource workspace 'Microsoft.MachineLearningServices/workspaces@2022-05-01' = if (enablePE) {
-  tags: tagValues
-  name: workspaceName
-  location: location
-  identity: {
-    type: identityType
-    userAssignedIdentities: ((identityType == 'userAssigned') ? userAssignedIdentities : json('null'))
-  }
-  sku: {
-    tier: sku
-    name: sku
-  }
-
-  properties: {
-    friendlyName: workspaceName
-    storageAccount: storageAccount_var
-    keyVault: keyVault_var
-    applicationInsights: applicationInsights_var
-    containerRegistry: ((containerRegistryOption != 'none') ? containerRegistry_var : json('null'))
-    primaryUserAssignedIdentity: ((identityType == 'userAssigned') ? primaryUserAssignedIdentity : json('null'))
-    systemDatastoresAuthMode: ((systemDatastoresAuthMode != 'accessKey') ? systemDatastoresAuthMode : json('null'))
-    softDeleteEnabled: softDeleteEnabled_var
-    publicNetworkAccess: publicNetworkAccess
-  }
-  dependsOn: [
-    storageAccount
-    keyVault
-    applicationInsights
-    containerRegistry
-  ]
-}
-
-module privateEndpointDeployment './nested_privateEndpointDeployment.bicep' = if (enablePE && (privateEndpointType != 'none')) {
-  name: privateEndpointDeploymentName
-  scope: resourceGroup(privateEndpointSubscription, privateEndpointResourceGroupName)
-  params: {
-    variables_defaultPEConnections: defaultPEConnections
-    variables_subnet: subnet
-    privateEndpointName: privateEndpointName
-    location: location
-    tagValues: tagValues
-    privateEndpointType: privateEndpointType
-  }
-}
-
-output PrivateEndPointNotSupport string = 'Private endpoint is not supported in the specified location.'

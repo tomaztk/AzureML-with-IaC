@@ -14,3 +14,19 @@ Steps:
 
 You have now the bicep files. The main bicep file in this case is named: template.bicep.
 
+az login --use-device-code
+az group create --name RG_AML_Bicep --location westeurope
+az deployment group create --resource-group RG_AML_Bicep --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/template.bicep
+
+az deployment group create --resource-group RG_AML_Bicep --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/main.bicep
+# az group delete --name RG_AML_Bicep
+
+
+WARNING: Decompilation is a best-effort process, as there is no guaranteed mapping from ARM JSON to Bicep.
+You may need to fix warnings and errors in the generated bicep file(s), or decompilation may fail entirely if an accurate conversion is not possible.
+If you would like to report any issues or inaccurate conversions, please see https://github.com/Azure/bicep/issues.
+/Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/nested_UpdateSubnetPolicy_vnetName_subnet.bicep(2,35) : Error BCP014: Expected a parameter type at this location. Please specify one of the following types: "array", "bool", "int", "object", "string".
+/Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/template.bicep(251,43) : Error BCP104: The referenced module has errors.
+/Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/template.bicep(359,34) : Error BCP104: The referenced module has errors.
+/Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/nested_privateEndpointDeployment.bicep(1,38) : Error BCP014: Expected a parameter type at this location. Please specify one of the following types: "array", "bool", "int", "object", "string".
+/Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/nested_privateEndpointDeployment.bicep(2,24) : Error BCP014: Expected a parameter type at this location. Please specify one of the following types: "array", "bool", "int", "object", "string".

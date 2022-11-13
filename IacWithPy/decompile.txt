@@ -15,8 +15,8 @@ Steps:
 You have now the bicep files. The main bicep file in this case is named: template.bicep.
 
 az login --use-device-code
-az group create --name RG_AML_Bicep --location westeurope
-az deployment group create --resource-group RG_AML_Bicep --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/template.bicep
+az group create --name RG_AML_Bicep2 --location westeurope
+az deployment group create --resource-group RG_AML_Bicep2 --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/template.bicep
 
 az deployment group create --resource-group RG_AML_Bicep --template-file /Users/tomazkastrun/Documents/tomaztk_github/AzureML-with-IaC/IacWithPy/main.bicep
 # az group delete --name RG_AML_Bicep

@@ -254,18 +254,31 @@ var primaryUserAssignedIdentity = resourceId(primaryUserAssignedIdentityResource
 var appInsightsLogWorkspaceDeploymentName = 'DeployLogWorkspace-${uniqueString(applicationInsightsName)}'
 var softDeleteEnabled_var = softDeleteEnabled
 
-module UpdateSubnetPolicy_vnetName_subnet './nested_UpdateSubnetPolicy_vnetName_subnet.bicep' = if ((subnetOption == 'existing') && (privateEndpointType != 'none')) {
-  name: 'UpdateSubnetPolicy-${uniqueString(vnetName, subnetName)}'
-  scope: resourceGroup(privateEndpointSubscription, vnetResourceGroupName)
-  params: {
-    reference_variables_subnet_2019_09_01: reference(subnet, '2019-09-01')
-    variables_subnetPolicyForPE: subnetPolicyForPE
-    vnetName: vnetName
-    subnetName: subnetName
-    subnetOption: subnetOption
-    privateEndpointType: privateEndpointType
-  }
+//module UpdateSubnetPolicy_vnetName_subnet './nested_UpdateSubnetPolicy_vnetName_subnet.bicep' = if ((subnetOption == 'existing') && (privateEndpointType != 'none')) {
+//  name: 'UpdateSubnetPolicy-${uniqueString(vnetName, subnetName)}'
+//  scope: resourceGroup(privateEndpointSubscription, vnetResourceGroupName)
+//  params: {
+//    reference_variables_subnet_2019_09_01: reference(subnet, '2019-09-01')
+//    variables_subnetPolicyForPE: subnetPolicyForPE
+//    vnetName: vnetName
+//    subnetName: subnetName
+//    subnetOption: subnetOption
+//    privateEndpointType: privateEndpointType
+//  }
+//}
+
+
+param reference_variables_subnet_2019_09_01 object
+param variables_subnetPolicyForPE object 
+
+
+resource vnetName_subnet 'Microsoft.Network/virtualNetworks/subnets@2019-09-01' = {
+  name: '${vnetName}/${subnetName}'
+  properties: (((subnetOption == 'existing') && (privateEndpointType != 'none')) ? union(reference_variables_subnet_2019_09_01, variables_subnetPolicyForPE) : json('null'))
 }
+
+
+
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-04-01' = if (enablePE && (storageAccountOption == 'new')) {
   name: storageAccountName
